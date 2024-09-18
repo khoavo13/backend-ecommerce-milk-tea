@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Products extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // khởi tạo giá trị id tự động bắt đầu từ 1
-    private Long productId; //id sản phẩm
+    private Long id; //id sản phẩm
 
     @ManyToOne
     @JoinColumn(name="category_id")
