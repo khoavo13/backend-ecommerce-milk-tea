@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public class BaseEntity {
     @CreationTimestamp
-    @Column(name="created_ad",updatable = false)
-    private LocalDateTime created_ad; //ngày khởi tạo
+    @Column(name="created_at",updatable = false)
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    @Column(name="updated_ad")
-    private LocalDateTime updated_ad; //ngày sửa đổi
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
 }
