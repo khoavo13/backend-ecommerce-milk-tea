@@ -19,9 +19,9 @@ public class Orders extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // khởi tạo giá trị id tự động bắt đầu từ 1
     private Long orderId;
 
-    private Long userId;
-
-    private LocalDateTime orderDate;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private Users users;
 
     private Double totalPrice; // tổng giá trị đơn hàng
 
