@@ -19,13 +19,16 @@ public class Products extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY) // khởi tạo giá trị id tự động bắt đầu từ 1
     private Long productId; //id sản phẩm
 
-    @NotBlank(message = "tên không được để trống")
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Categories category;
+
+    @NotBlank(message = "Tên sản phẩm không được để trống")
     @Size(min=5,max=50,message = "tên phải có từ 5 đến 50 ký tự")
     private String productName; //tên sản phẩm
 
     @NotBlank(message = "mô tả không được để trống")
     private String productDescription; //mô tả sản phẩm
-
 
     private Double productPrice; //giá của sản phẩm
 }

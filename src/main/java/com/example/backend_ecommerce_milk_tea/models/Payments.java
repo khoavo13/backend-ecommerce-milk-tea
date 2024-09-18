@@ -17,6 +17,7 @@ public class Payments extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
+
     private Long orderId;
 
     private String paymentType; // ["VNPay", "Tiền mặt", "Chuyển khoản ngân hàng"
