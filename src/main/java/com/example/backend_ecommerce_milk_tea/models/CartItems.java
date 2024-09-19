@@ -27,4 +27,8 @@ public class CartItems extends BaseEntity{
 
     @Min(value = 1, message = "Quantity must be at least 1")
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Carts cart;
 }
