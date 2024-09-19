@@ -1,5 +1,6 @@
 package com.example.backend_ecommerce_milk_tea.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -16,6 +17,7 @@ public class UserDTO {
     private String username;
 
     @NotBlank(message = "Password không được để trống")
+    @JsonProperty("password_hash")
     private String passwordHash;
 
     @NotBlank(message = "Email không được để trống")
