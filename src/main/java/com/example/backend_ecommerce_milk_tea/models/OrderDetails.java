@@ -19,14 +19,21 @@ public class OrderDetails extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY) // khởi tạo giá trị id tự động bắt đầu từ 1
     private Long orderDetailId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="order_id")
-    private Orders orders;
+    private Orders order;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="product_id")
-    private List<Products> products;
+    private Products product;
 
-    private int quantity; // số lượng sản phẩm
-    private Double priceProduct; // giá sản phẩm tại thời điểm đặt hàng
+    @Column(nullable = false)
+    private Long price;
+
+    @Column(name = "number_of_products", nullable = false)
+    private Integer numberOfProducts;
+
+    @Column(name="total_money", nullable = false)
+    private Long totalMoney;
+
 }
