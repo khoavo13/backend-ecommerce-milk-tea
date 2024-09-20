@@ -7,13 +7,17 @@ import com.example.backend_ecommerce_milk_tea.repositories.CartItemRepository;
 import com.example.backend_ecommerce_milk_tea.repositories.CartRepository;
 import com.example.backend_ecommerce_milk_tea.repositories.ProductRepository;
 import com.example.backend_ecommerce_milk_tea.repositories.UserRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService implements ICartService{
     private final CartRepository cartRepository;
+    @Getter
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
@@ -85,6 +89,11 @@ public class CartService implements ICartService{
                 .mapToDouble(item -> item.getProducts().getProductPrice() * item.getQuantity())
                 .sum();
         cart.setTotalPrice(total);
+    }
+
+    @Override
+    public List<CartItems> getItemsByCartId(Long cartId) {
+        return cartItemRepository.findByCart_Id(cartId);
     }
 
 }

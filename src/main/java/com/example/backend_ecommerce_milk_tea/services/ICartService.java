@@ -1,6 +1,9 @@
 package com.example.backend_ecommerce_milk_tea.services;
 
+import com.example.backend_ecommerce_milk_tea.models.CartItems;
 import com.example.backend_ecommerce_milk_tea.models.Carts;
+
+import java.util.List;
 
 public interface ICartService {
 
@@ -18,4 +21,7 @@ public interface ICartService {
 
     // Tính tổng giá giỏ hàng
     void updateCartTotalPrice(Carts cart);
+
+    // Lấy danh sách sản phẩm trong giỏ hàng theo ID giỏ hàng
+    List<CartItems> getItemsByCartId(Long cartId);
 }
