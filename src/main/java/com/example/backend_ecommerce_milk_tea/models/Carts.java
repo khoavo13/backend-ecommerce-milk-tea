@@ -1,10 +1,9 @@
 package com.example.backend_ecommerce_milk_tea.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "carts")
@@ -22,4 +21,11 @@ public class Carts extends BaseEntity {
     private Users user;
 
     private Double totalPrice;
+
+    // Danh sách các mục trong giỏ hàng
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CartItems> items;
+
 }
