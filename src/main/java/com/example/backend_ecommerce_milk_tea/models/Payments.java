@@ -21,7 +21,7 @@ public class Payments extends BaseEntity{
     @JoinColumn(name="order_id")
     private Orders order;
 
-    private String paymentType; // ["VNPay", "Tiền mặt", "Chuyển khoản ngân hàng"
+    private String paymentType; // ["VNPay", "Tiền mặt", "Chuyển khoản ngân hàng"]
 
     private String paymentStatus; // ["Đã thanh toán", "Chờ xử lý", "Thất bại"]
 
