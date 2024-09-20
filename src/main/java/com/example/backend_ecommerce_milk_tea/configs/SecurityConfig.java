@@ -20,11 +20,10 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers(HttpMethod.POST,"/api/user/login").permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/user/list/**").hasRole("USER")
+                .requestMatchers(HttpMethod.GET,"/api/user/list/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/category/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/user/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/category").hasRole("ADMIN")
-
                 .anyRequest().authenticated();
                 return http.build();
     }
