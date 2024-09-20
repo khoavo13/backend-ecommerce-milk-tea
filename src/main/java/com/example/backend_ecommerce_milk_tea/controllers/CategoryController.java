@@ -100,8 +100,8 @@ public class CategoryController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
-    @GetMapping("/getAllProduct/{id}")
-    public ResponseEntity<ApiResponse> getAllProduct(@PathVariable Long id) {
+    @GetMapping("/getProduct/{id}")
+    public ResponseEntity<ApiResponse> getProduct(@PathVariable Long id) {
         ApiResponse apiResponse = ApiResponse
                 .builder()
                 .data(categoryService.getProducts(id))
