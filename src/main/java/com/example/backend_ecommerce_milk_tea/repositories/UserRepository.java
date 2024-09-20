@@ -4,4 +4,6 @@ import com.example.backend_ecommerce_milk_tea.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
+    Users findByUsername(String username);
+    boolean existsByUsername(String username);
 }
