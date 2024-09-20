@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/category/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/user/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/category").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/api/cart/**").hasRole("USER")
 
                 .anyRequest().authenticated();
                 return http.build();
