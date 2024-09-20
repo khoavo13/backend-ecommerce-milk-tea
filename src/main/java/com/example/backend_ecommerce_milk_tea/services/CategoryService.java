@@ -72,7 +72,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public List<Products> getProducts(Long categoryId) {
-        return productRepository.findCategoryById(categoryId);
+    public List<Products> getProducts(Long id) {
+        return productRepository.findCategoryById(id);
     }
 }
