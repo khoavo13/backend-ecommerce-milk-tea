@@ -16,4 +16,5 @@ public interface ICategoryService {
     Products addProduct(Long categoryId, ProductDTO productDTO);
     Products updateProduct(Long categoryId,Long productId,ProductDTO productDTO);
     void deleteProduct(Long categoryId,Long productId);
+    List<Products> getProducts(Long categoryId);
 }

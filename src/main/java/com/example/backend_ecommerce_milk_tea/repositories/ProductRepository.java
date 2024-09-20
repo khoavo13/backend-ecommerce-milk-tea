@@ -11,13 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Products, Long> {
-    @Query("select p from Products p where"+
-    "(:productName is null or p.productName like %:productName%) and"+
-    "(:productPriceMin is null or p.productPrice >= :productPriceMin) and"+
-    "(:productPriceMax is null or p.productPrice <= :productPriceMax)")
-    List<Products> findByProductNameAndProductPriceBetween(
-            @Param("productName") String productName,
-            @Param("productPriceMin") Double productPriceStart,
-            @Param("productPriceMax") Double productPriceEnd
-    );
+    List<Products> findCategoryById(Long id);
 }

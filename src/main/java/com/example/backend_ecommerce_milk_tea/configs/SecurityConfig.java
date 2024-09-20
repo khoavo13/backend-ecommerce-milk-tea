@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/category/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/user/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/category").hasRole("ADMIN")
-
+                .requestMatchers(HttpMethod.PUT,"/api/category").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/category/addProduct/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
                 return http.build();
     }

@@ -70,4 +70,9 @@ public class CategoryService implements ICategoryService {
     public void deleteProduct(Long categoryId, Long productId) {
 
     }
+
+    @Override
+    public List<Products> getProducts(Long categoryId) {
+        return productRepository.findCategoryById(categoryId);
+    }
 }
