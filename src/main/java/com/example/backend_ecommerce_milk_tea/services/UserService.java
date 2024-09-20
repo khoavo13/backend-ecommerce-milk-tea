@@ -1,20 +1,31 @@
 package com.example.backend_ecommerce_milk_tea.services;
 
-import com.example.backend_ecommerce_milk_tea.dtos.UserDTO;
+import com.example.backend_ecommerce_milk_tea.configs.JwtToken;
 import com.example.backend_ecommerce_milk_tea.models.Users;
 import com.example.backend_ecommerce_milk_tea.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtToken jwtToken;
     @Override
-    public Users getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Users createUser(Users user) throws Exception{
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new Exception("Username is already taken.");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     @Override
@@ -23,36 +34,20 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Users addUser(UserDTO userDTO) {
-        Users user = Users
-                .builder()
-                .username(userDTO.getUsername())
-                .passwordHash(userDTO.getPasswordHash())
-                .email(userDTO.getEmail())
-                .phone(userDTO.getPhone())
-                .role(userDTO.getRole())
-                .build();
-        return userRepository.save(user);
+    public Users getUserByUsername(String username) throws Exception{
+        return userRepository.findByUsername(username);
     }
 
     @Override
-    public Users updateUser(Long id, UserDTO userDTO) {
-        Users user = getUserById(id);
-        user.setUsername(userDTO.getUsername());
-        user.setPasswordHash(userDTO.getPasswordHash());
-        user.setEmail(userDTO.getEmail());
-        user.setPhone(userDTO.getPhone());
-        user.setRole(userDTO.getRole());
-        return userRepository.save(user);
-    }
+    public String login(String username, String password) throws Exception{
+        Users user = userRepository.findByUsername(username);
+        if (user==null) {
+            throw new Exception("invalid username");
+        }
 
-    @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Users> searchUsers(String gmail) {
-        return List.of();
+        UsernamePasswordAuthenticationToken authentication = new
+                UsernamePasswordAuthenticationToken(user, password, new ArrayList<>());
+        authenticationManager.authenticate(authentication);
+        return jwtToken.generateToken(user);
     }
 }
