@@ -1,6 +1,8 @@
 package com.example.backend_ecommerce_milk_tea.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException{
+import java.io.IOException;
+
+public class ResourceNotFoundException extends IOException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
