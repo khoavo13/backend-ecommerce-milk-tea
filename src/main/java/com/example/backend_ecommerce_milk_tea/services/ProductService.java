@@ -1,6 +1,7 @@
 package com.example.backend_ecommerce_milk_tea.services;
 
 
+import com.example.backend_ecommerce_milk_tea.dtos.ProductDTO;
 import com.example.backend_ecommerce_milk_tea.models.Products;
 import com.example.backend_ecommerce_milk_tea.repositories.ProductRepository;
 import com.example.backend_ecommerce_milk_tea.responses.ProductResponse;
@@ -34,5 +35,19 @@ public class ProductService implements IProductService {
     @Override
     public List<Products> searchProducts(String productName, Double priceMin, Double priceMax) {
         return List.of();
+    }
+
+    @Override
+    public Products updateProduct(Long productId, ProductDTO productDTO) {
+        Products product = getProductById(productId);
+        product.setProductName(productDTO.getProductName());
+        product.setProductDescription(productDTO.getProductDescription());
+        product.setProductPrice(productDTO.getProductPrice());
+        return productRepository.save(product);
+    }
+
+    @Override
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
     }
 }
