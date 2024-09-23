@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +50,10 @@ public class UserService implements IUserService {
                 UsernamePasswordAuthenticationToken(user, password, new ArrayList<>());
         authenticationManager.authenticate(authentication);
         return jwtToken.generateToken(user);
+    }
+
+    @Override
+    public Optional<Users> findUserByUsernameAndPassword(String username, String email){
+        return userRepository.findByUsernameAndEmail(username, email);
     }
 }

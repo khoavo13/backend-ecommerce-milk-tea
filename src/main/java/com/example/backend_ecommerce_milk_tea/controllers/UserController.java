@@ -1,5 +1,6 @@
 package com.example.backend_ecommerce_milk_tea.controllers;
 
+import com.example.backend_ecommerce_milk_tea.exceptions.ResourceNotFoundException;
 import com.example.backend_ecommerce_milk_tea.models.Users;
 import com.example.backend_ecommerce_milk_tea.responses.ApiResponse;
 import com.example.backend_ecommerce_milk_tea.services.UserService;
@@ -12,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -57,5 +59,21 @@ public class UserController {
                 .status(HttpStatus.OK.value())
                 .build();
         return ResponseEntity.ok().body(apiResponse);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse> search(@RequestParam String username, @RequestParam String email) throws ResourceNotFoundException {
+        Optional<Users> user = userService.findUserByUsernameAndPassword(username, email);
+        if (user.isPresent()){
+            ApiResponse apiResponse=ApiResponse.builder()
+                    .data(user)
+                    .message("Search user successfully")
+                    .status(HttpStatus.OK.value())
+                    .build();
+            return ResponseEntity.ok().body(apiResponse);
+        }
+        else {
+            throw new ResourceNotFoundException("User khong tim thay");
+        }
     }
 }
