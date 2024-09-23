@@ -20,20 +20,25 @@ public class OrderDetails extends BaseEntity{
     private Long orderDetailId;
 
     @ManyToOne
-    @JoinColumn(name="order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Orders order;
 
+
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_id", nullable = false)
     private Products product;
 
     @Column(nullable = false)
     private Long price;
 
     @Column(name = "number_of_products", nullable = false)
-    private Integer numberOfProducts;
+    private int numberOfProducts;
 
     @Column(name="total_money", nullable = false)
     private Long totalMoney;
+
+    @Column(name="size", length = 50, nullable = false)
+    private String size; // Thêm kích thước (small, medium, large)
+
 
 }
