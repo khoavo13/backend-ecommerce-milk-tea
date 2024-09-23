@@ -28,8 +28,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,"/api/category").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/category/addProduct/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/cart/**").hasRole("USER")
-
-
                 .anyRequest().authenticated();
                 return http.build();
     }

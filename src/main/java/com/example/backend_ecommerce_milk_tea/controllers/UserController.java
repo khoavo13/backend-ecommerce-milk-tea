@@ -76,4 +76,40 @@ public class UserController {
             throw new ResourceNotFoundException("User khong tim thay");
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id,@Valid @RequestBody Users updatedUser, BindingResult bindingResult) throws ResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .data(errors)
+                    .message("Validation failed")
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .build();
+            return ResponseEntity.badRequest().body(apiResponse);
+        }
+
+        Users user = userService.updateUser(id, updatedUser);
+        ApiResponse apiResponse = ApiResponse.builder()
+                .data(user)
+                .message("Updated user successfully")
+                .status(HttpStatus.OK.value())
+                .build();
+        return ResponseEntity.ok().body(apiResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteStudent(@PathVariable Long id) throws ResourceNotFoundException {
+        Users student = userService.getUserById(id);
+        if (student == null) {
+            throw new ResourceNotFoundException("User khong tim thay voi id: " + id);
+        }
+        userService.deleteStudent(id);
+        ApiResponse apiResponse = ApiResponse.builder()
+                .data(null)
+                .message("Deleted user successfully")
+                .status(HttpStatus.OK.value())
+                .build();
+        return ResponseEntity.ok().body(apiResponse);
+    }
 }

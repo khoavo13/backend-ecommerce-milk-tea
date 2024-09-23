@@ -39,13 +39,13 @@ public class ProductController {
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         Products products = productService.getProductById(id);
         if (products == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
         }
         productService.deleteProduct(id);
         ApiResponse apiResponse = ApiResponse
                 .builder()
                 .data(null)
-                .message("Deleted Successfully")
+                .message("Deleted product Successfully")
                 .status(HttpStatus.NO_CONTENT.value())
                 .build();
         return ResponseEntity.ok().body(apiResponse);
@@ -71,7 +71,7 @@ public class ProductController {
                 .builder()
                 .data(products)
                 .status(HttpStatus.OK.value())
-                .message("Update Success")
+                .message("Update Product Success")
                 .build();
         return ResponseEntity.ok().body(apiResponse);
     }

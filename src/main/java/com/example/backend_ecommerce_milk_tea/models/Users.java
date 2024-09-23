@@ -33,6 +33,9 @@ public class Users extends BaseEntity implements UserDetails {
     @NotBlank(message = "Password không được để trống")
     private String password;
 
+    @NotBlank(message = "Fullname không được để trống")
+    private String fullname;
+
     @NotBlank(message = "Email không được để trống")
     private String email;
 

@@ -1,5 +1,6 @@
 package com.example.backend_ecommerce_milk_tea.services;
 
+import com.example.backend_ecommerce_milk_tea.exceptions.ResourceNotFoundException;
 import com.example.backend_ecommerce_milk_tea.models.Users;
 
 import java.util.List;
@@ -11,4 +12,7 @@ public interface IUserService {
     Users getUserByUsername(String username) throws Exception;
     String login(String username, String password) throws Exception;
     Optional<Users> findUserByUsernameAndPassword(String username, String email);
+    Users updateUser(Long id, Users updatedUser) throws ResourceNotFoundException;
+    void deleteStudent(Long id);
+    Users getUserById(Long id);
 }
