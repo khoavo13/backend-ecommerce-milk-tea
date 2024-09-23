@@ -62,17 +62,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Products updateProduct(Long categoryId, Long productId, ProductDTO productDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteProduct(Long categoryId, Long productId) {
-
-    }
-
-    @Override
     public List<Products> getProducts(Long id) {
-        return productRepository.findCategoryById(id);
+        return productRepository.findByCategoryId(id);
     }
 }

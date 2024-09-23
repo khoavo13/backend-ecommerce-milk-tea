@@ -13,4 +13,6 @@ public interface IProductService {
     List<Products> getAllProducts();
     Page<ProductResponse> getAllProductsPage(Pageable pageable);
     List<Products> searchProducts(String productName, Double priceMin, Double priceMax);
+    Products updateProduct(Long productId,ProductDTO productDTO);
+    void deleteProduct(Long productId);
 }

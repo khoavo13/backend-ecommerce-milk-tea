@@ -7,6 +7,7 @@ import com.example.backend_ecommerce_milk_tea.models.Categories;
 import com.example.backend_ecommerce_milk_tea.models.Products;
 import com.example.backend_ecommerce_milk_tea.responses.ApiResponse;
 import com.example.backend_ecommerce_milk_tea.services.CategoryService;
+import com.example.backend_ecommerce_milk_tea.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -106,7 +107,7 @@ public class CategoryController {
                 .builder()
                 .data(categoryService.getProducts(id))
                 .status(HttpStatus.OK.value())
-                .message("Get All Image Success")
+                .message("Get Success")
                 .build();
         return ResponseEntity.ok(apiResponse);
     }
