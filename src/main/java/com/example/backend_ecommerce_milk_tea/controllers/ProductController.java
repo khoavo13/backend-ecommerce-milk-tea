@@ -8,10 +8,15 @@ import com.example.backend_ecommerce_milk_tea.models.Categories;
 import com.example.backend_ecommerce_milk_tea.models.ProductImage;
 import com.example.backend_ecommerce_milk_tea.models.Products;
 import com.example.backend_ecommerce_milk_tea.responses.ApiResponse;
+import com.example.backend_ecommerce_milk_tea.responses.ProductListResponse;
+import com.example.backend_ecommerce_milk_tea.responses.ProductResponse;
 import com.example.backend_ecommerce_milk_tea.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -186,5 +191,26 @@ public class ProductController {
                 .status(HttpStatus.NO_CONTENT.value())
                 .build();
         return ResponseEntity.ok().body(apiResponse);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse> getAllStudentList(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "5") int limit) {
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("createdAt").descending());
+        Page<ProductResponse> productResponsePage = productService.getAllProductsPage(pageRequest);
+        int totalPages = productResponsePage.getTotalPages();
+        List<ProductResponse> productResponseList = productResponsePage.getContent();
+        ProductListResponse productListResponse = ProductListResponse
+                .builder()
+                .productResponseList(productResponseList)
+                .totalPages(totalPages)
+                .build();
+        ApiResponse apiResponse = ApiResponse
+                .builder()
+                .data(productListResponse)
+                .status(HttpStatus.OK.value())
+                .message("OK")
+                .build();
+        return ResponseEntity.ok(apiResponse);
     }
 }
