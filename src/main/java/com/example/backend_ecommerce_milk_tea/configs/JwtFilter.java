@@ -39,6 +39,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
 
+            if (request.getServletPath().startsWith("/v3/api-docs") ||
+                    request.getServletPath().startsWith("/swagger-ui")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             final String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 response.sendError(
@@ -77,7 +83,8 @@ public class JwtFilter extends OncePerRequestFilter {
 //                Pair.of(String.format("%s/users/register", apiPrefix), "POST"),
 //                Pair.of(String.format("%s/users/refresh-token", apiPrefix), "POST"),
                Pair.of(String.format("%s/user/login", apiPrefix), "POST"),
-                Pair.of(String.format("%s/user/register", apiPrefix), "POST")
+                Pair.of(String.format("%s/user/register", apiPrefix), "POST"),
+                Pair.of(String.format("swagger-ui/**", apiPrefix), "GET")
         );
         for(Pair<String, String> bypassToken: bypassTokens) {
             if (request.getServletPath().contains(bypassToken.getFirst()) &&
