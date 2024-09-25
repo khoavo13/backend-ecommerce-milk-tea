@@ -17,8 +17,10 @@ public class UserDTO {
     private String username;
 
     @NotBlank(message = "Password không được để trống")
-    @JsonProperty("password_hash")
-    private String passwordHash;
+    private String password;
+
+    @NotBlank(message = "Fullname không được để trống")
+    private String fullname;
 
     @NotBlank(message = "Email không được để trống")
     private String email;
@@ -28,4 +30,5 @@ public class UserDTO {
 
     @NotEmpty(message = "Role không được để trống")
     private String role;
+
 }

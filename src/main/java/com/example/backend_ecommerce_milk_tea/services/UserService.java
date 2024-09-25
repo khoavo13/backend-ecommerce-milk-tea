@@ -1,6 +1,7 @@
 package com.example.backend_ecommerce_milk_tea.services;
 
 import com.example.backend_ecommerce_milk_tea.configs.JwtToken;
+import com.example.backend_ecommerce_milk_tea.exceptions.ResourceNotFoundException;
 import com.example.backend_ecommerce_milk_tea.models.Users;
 import com.example.backend_ecommerce_milk_tea.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtToken jwtToken;
+
     @Override
-    public Users createUser(Users user) throws Exception{
+    public Users createUser(Users user) throws Exception {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new Exception("Username is already taken.");
         }
@@ -35,14 +37,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Users getUserByUsername(String username) throws Exception{
+    public Users getUserByUsername(String username) throws Exception {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public String login(String username, String password) throws Exception{
+    public String login(String username, String password) throws Exception {
         Users user = userRepository.findByUsername(username);
-        if (user==null) {
+        if (user == null) {
             throw new Exception("invalid username");
         }
 
@@ -53,7 +55,38 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<Users> findUserByUsernameAndPassword(String username, String email){
+    public Optional<Users> findUserByUsernameAndPassword(String username, String email) {
         return userRepository.findByUsernameAndEmail(username, email);
+    }
+
+    @Override
+    public Users getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Users updateUser(Long id, Users updatedUser) throws ResourceNotFoundException {
+        Optional<Users> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            Users existingUser = userOptional.get();
+
+            // Cập nhật các trường cần thiết
+            existingUser.setFullname(updatedUser.getFullname());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setRole(updatedUser.getRole());
+            existingUser.setPhone(updatedUser.getPhone());
+
+            return userRepository.save(existingUser);
+        } else {
+            throw new ResourceNotFoundException("User khong tim thay voi id: " + id);
+        }
+    }
+
+    @Override
+    public void deleteStudent(Long id) {
+        userRepository.deleteById(id);
     }
 }
