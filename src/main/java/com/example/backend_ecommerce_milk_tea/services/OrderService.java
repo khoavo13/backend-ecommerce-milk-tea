@@ -38,7 +38,7 @@ public class OrderService implements IOrderService {
         // Tạo đơn hàng mới từ các thông tin trong OrderDTO
         Orders order = new Orders();
         order.setUsers(user);
-        order.setFullName(orderDTO.getFullname());
+        order.setFullName(orderDTO.getFullName());
         order.setEmail(orderDTO.getEmail());
         order.setPhoneNumber(orderDTO.getPhoneNumber());
         order.setAddress(orderDTO.getAddress());
@@ -57,9 +57,9 @@ public class OrderService implements IOrderService {
             Products product = productRepository.findById(detailDTO.getProductId())
                     .orElseThrow(() -> new DataNotFoundException("Không tìm thấy sản phẩm với ID: " + detailDTO.getProductId()));
 
-            //totalMoney += detailDTO.getPrice() * detailDTO.getNumberOfProducts();
-            totalMoney += detailDTO.getTotalMoney();
+            totalMoney += detailDTO.getPrice() * detailDTO.getNumberOfProducts();
         }
+//        System.out.println(totalMoney);
         order.setTotalMoney(totalMoney);
 
         // Lưu đơn hàng vào cơ sở dữ liệu
@@ -96,26 +96,25 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Orders updateOrderStatus(Long orderId, OrderStatus status) {
-        // Tìm đơn hàng theo ID và chỉ lấy các đơn hàng không bị xoá mềm
-        Orders order = orderRepository.findByIdAndActiveTrue(orderId)
-                .orElseThrow(() -> new DataNotFoundException("Không tìm thấy đơn hàng với ID: " + orderId + " hoặc đơn hàng đã bị xoá mềm."));
+    public Orders updateOrderStatus(Long orderId, String status) {
+        // Ghi nhật ký để kiểm tra giá trị status truyền vào
+        System.out.println("Trạng thái nhận được: " + status);
 
-        // Kiểm tra và cập nhật trạng thái đơn hàng
-        if (status.equals(OrderStatus.PENDING)){
-            order.setStatus(OrderStatus.PENDING);
-        } else if (status.equals(OrderStatus.PROCESSING)){
-            order.setStatus(OrderStatus.PROCESSING);
-        } else if (status.equals(OrderStatus.SHIPPED)){
-            order.setStatus(OrderStatus.SHIPPED);
-        } else if(status.equals(OrderStatus.DELIVERED)){
-            order.setStatus(OrderStatus.DELIVERED);
-        } else if(status.equals(OrderStatus.CANCELLED)) {
-            order.setStatus(OrderStatus.CANCELLED);
-        } else {
-            throw new IllegalArgumentException("Trạng thái đơn hàng không hợp lệ.");
+        Orders order = orderRepository.findByIdAndActiveTrue(orderId)
+                .orElseThrow(() -> new DataNotFoundException("Không tìm thấy đơn hàng với ID: " + orderId));
+
+        switch (status.toUpperCase()) {
+            case OrderStatus.PENDING:
+            case OrderStatus.PROCESSING:
+            case OrderStatus.SHIPPED:
+            case OrderStatus.DELIVERED:
+            case OrderStatus.CANCELLED:
+                order.setStatus(status.toUpperCase());
+                break;
+            default:
+                throw new IllegalArgumentException("Trạng thái đơn hàng không hợp lệ.");
         }
 
-        return orderRepository.save(order); // Lưu đơn hàng sau khi cập nhật
+        return orderRepository.save(order);
     }
 }

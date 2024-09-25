@@ -34,7 +34,9 @@ public class ProductService implements IProductService {
 
     @Override
     public Page<ProductResponse> getAllProductsPage(Pageable pageable) {
-        return null;
+        return productRepository.findAll(pageable).map(products -> {
+            return ProductResponse.fromProduct(products);
+        });
     }
 
     @Override
