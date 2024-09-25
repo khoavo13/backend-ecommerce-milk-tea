@@ -28,6 +28,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,"/api/category").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/category/addProduct/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/cart/**").hasRole("USER")
+                .requestMatchers(HttpMethod.POST, "/api/orders/createOrder").hasRole("ADMIN")
+                .requestMatchers("/api/orders/**", "/api/orderDetails/**").hasRole("ADMIN")
+                //.requestMatchers("/api/orders/**").permitAll()
 
 
                 .anyRequest().authenticated();

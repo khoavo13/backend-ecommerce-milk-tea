@@ -26,6 +26,6 @@ public interface IOrderService {
     List<Orders> getActiveOrdersByUserId(Long userId);
 
     // Cập nhật trạng thái đơn hàng
-    Orders updateOrderStatus(Long orderId, OrderStatus status);
+    Orders updateOrderStatus(Long orderId, String status);
 
 }

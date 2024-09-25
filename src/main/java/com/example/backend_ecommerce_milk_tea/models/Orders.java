@@ -22,16 +22,15 @@ public class Orders extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
     private Users users;
 
-    @Column(name="fullname", length = 100,nullable = false)
+    @Column( length = 100,nullable = false)
     private String fullName;
 
     @Column(length = 100, nullable = false)
     private String email;
 
-    @Column(name="phone_number", length = 20, nullable = false)
+    @Column( length = 20, nullable = false)
     private String phoneNumber;
 
     @Column(length = 255,nullable = false)
@@ -43,25 +42,25 @@ public class Orders extends BaseEntity {
     @Column(nullable = false)
     private String status;
 
-    @Column(name = "total_money", nullable = false)
+    @Column( nullable = false)
     private Long totalMoney;
 
-    @Column(name = "shipping_method", nullable = false)
+    @Column( nullable = false)
     private String shippingMethod;
 
-    @Column(name="shipping_address", nullable = false)
+    @Column( nullable = false)
     private String shippingAddress;
 
-    @Column(name="shipping_date")
+
     private LocalDate shippingDate;
 
-    @Column(name="tracking_number", length = 50)
+    @Column( length = 50)
     private String trackingNumber;
 
-    @Column(name="payment_method", nullable = false)
+    @Column( nullable = false)
     private String paymentMethod;
 
-    @Column(name="active", nullable = false)
+    @Column( nullable = false)
     private Boolean  active; //Mặc định là true (đơn hàng đang hoạt động)
 
 
