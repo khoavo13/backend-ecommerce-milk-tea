@@ -31,14 +31,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,"/api/category").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/category/addProduct/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/cart/**").hasRole("USER")
-<<<<<<< HEAD
                 .requestMatchers(HttpMethod.POST, "/api/orders/createOrder").hasRole("ADMIN")
                 .requestMatchers("/api/orders/**", "/api/orderDetails/**").hasRole("ADMIN")
                 //.requestMatchers("/api/orders/**").permitAll()
-
-
-=======
->>>>>>> 131d7bced95ec20268f0113cf1ed731c811946c4
                 .anyRequest().authenticated();
                 return http.build();
     }
