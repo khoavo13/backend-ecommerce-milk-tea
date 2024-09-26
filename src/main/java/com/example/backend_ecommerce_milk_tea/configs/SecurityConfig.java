@@ -7,8 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,7 +19,6 @@ public class SecurityConfig {
                 .csrf().disable()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/user/login").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/user/list/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/user/search/**").hasRole("ADMIN")
@@ -31,28 +28,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,"/api/category").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/category/addProduct/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/cart/**").hasRole("USER")
+<<<<<<< HEAD
                 .requestMatchers(HttpMethod.POST, "/api/orders/createOrder").hasRole("ADMIN")
                 .requestMatchers("/api/orders/**", "/api/orderDetails/**").hasRole("ADMIN")
                 //.requestMatchers("/api/orders/**").permitAll()
                 .requestMatchers("/api/payments/**").hasRole("ADMIN")
+=======
+>>>>>>> 6fda45e122a4a99edaf694c0ebbece0c7c1d8240
 
 
                 .anyRequest().authenticated();
                 return http.build();
     }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
-            }
-        };
-    }
-
 }
 
