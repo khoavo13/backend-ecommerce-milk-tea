@@ -83,4 +83,9 @@ public class ProductService implements IProductService {
     public void deleteProductImage(Long productImageId) {
         productImageResponse.deleteById(productImageId);
     }
+
+    @Override
+    public List<ProductImage> getProduct(Long id) {
+        return productImageResponse.findByProductId(id);
+    }
 }

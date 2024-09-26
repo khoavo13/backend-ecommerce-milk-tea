@@ -53,6 +53,17 @@ public class ProductController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getProduct(@PathVariable Long id) {
+        ApiResponse apiResponse = ApiResponse
+                .builder()
+                .data(productService.getProduct(id))
+                .status(HttpStatus.OK.value())
+                .message("Get Success")
+                .build();
+        return ResponseEntity.ok(apiResponse);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         Products products = productService.getProductById(id);

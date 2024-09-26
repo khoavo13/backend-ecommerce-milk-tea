@@ -14,5 +14,5 @@ public interface ICategoryService {
     void deleteCategory(Long categoryId);
     List<Categories> getAllCategories();
     Products addProduct(Long categoryId, ProductDTO productDTO);
-    List<Products> getProducts(Long id);
+    List<Products> getCategory(Long id);
 }

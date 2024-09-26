@@ -101,11 +101,11 @@ public class CategoryController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
-    @GetMapping("/getProduct/{id}")
-    public ResponseEntity<ApiResponse> getProduct(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getCategory(@PathVariable Long id) {
         ApiResponse apiResponse = ApiResponse
                 .builder()
-                .data(categoryService.getProducts(id))
+                .data(categoryService.getCategory(id))
                 .status(HttpStatus.OK.value())
                 .message("Get Success")
                 .build();

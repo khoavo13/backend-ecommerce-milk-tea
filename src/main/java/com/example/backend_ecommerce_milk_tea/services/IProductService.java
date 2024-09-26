@@ -21,4 +21,5 @@ public interface IProductService {
     ProductImage addProductImage(Long productId, ProductImageDTO productImageDTO);
     ProductImage getProductImageById(Long productImageId);
     void deleteProductImage(Long productImageId);
+    List<ProductImage> getProduct(Long id);
 }
