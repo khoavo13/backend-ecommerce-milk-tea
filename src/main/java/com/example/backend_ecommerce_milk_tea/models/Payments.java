@@ -25,5 +25,5 @@ public class Payments extends BaseEntity{
 
     private String paymentStatus; // ["Đã thanh toán", "Chờ xử lý", "Thất bại"]
 
-    private Double totalPrice; // số tiền thanh toán
+    private Long totalPrice; // số tiền thanh toán
 }
