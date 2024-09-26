@@ -28,8 +28,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Products> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductImage> getAllProducts() {
+        return productImageResponse.findAll();
     }
 
     @Override

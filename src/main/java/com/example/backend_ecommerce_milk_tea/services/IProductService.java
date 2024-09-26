@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IProductService {
     Products getProductById(Long id);
-    List<Products> getAllProducts();
+    List<ProductImage> getAllProducts();
     Page<ProductResponse> getAllProductsPage(Pageable pageable);
     List<Products> searchProducts(String productName, Double priceMin, Double priceMax);
     Products updateProduct(Long productId,ProductDTO productDTO);
